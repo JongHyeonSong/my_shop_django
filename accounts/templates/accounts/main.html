@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,24 +8,7 @@
     {% block head %}
     {% endblock %}
 
-    <style>
-        #logo{
-           
-        }
-        body{
-            background-color: #ebeff5 ;
-        }
-        #total-orders{
-            background-color: blueviolet;
-        }
-        #orders-delivered{
-            background-color: rgb(160, 96, 221);
-        }
-        #orders-pending{
-            background-color: rgb(183, 145, 219);
-        }
-
-    </style>
+    <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
 </head>
 <body>
     {% include 'accounts/navbar.html' %}
