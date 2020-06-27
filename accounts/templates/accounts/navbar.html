@@ -1,5 +1,13 @@
 {% load static %}
 
+<style>
+    .hello-msg{
+        font-size:18px;
+        color:#fff;
+        margin-right:20px;
+    }
+</style>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <img src="{% static 'images/가젤.jpg' %}" 
     style="width:80px; border: 3px solid rgb(126, 63, 134); border-radius: 7px;">
@@ -15,10 +23,12 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'products' %}">Products</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="#">another1</a>
-        </li>
-        
+        </li> -->
       </ul>
     </div>
+
+    <span class="hello-msg">Hello, {{request.user}}</span>
+    <span><a href="{% url 'logout' %}">Logout</a></span>
   </nav>
