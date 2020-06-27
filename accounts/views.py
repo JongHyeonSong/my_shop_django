@@ -1,8 +1,10 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
+from django.forms import inlineformset_factory
+
 from .models import *
 from .forms import *
-
+from .filters import OrderFilter
 def home(request):
     orders = Order.objects.all().order_by('-id')
     customers = Customer.objects.all()
@@ -35,24 +37,33 @@ def customer(request,pk):
     customer = Customer.objects.get(id=pk)
     orders = customer.order_set.all()
     order_count = orders.count()
+    
+    myFilter = OrderFilter(request.GET, queryset=orders)
+    orders = myFilter.qs
+    
     context={
         'customer':customer,
         'orders':orders,
         'order_count':order_count,
+        'myFilter':myFilter,
     }
     return render(request, 'accounts/customer.html', context)
 
 
-def createOrder(request):
-    form = OrderForm()
+def createOrder(request,pk):
+    OrderFormSet = inlineformset_factory(Customer,Order, fields=['product','status'],extra=5)
+    
+    customer = Customer.objects.get(id=pk)
+    formset = OrderFormSet(queryset=Order.objects.none(), instance=customer)
+    # form = OrderForm(initial={'customer':customer})
     if request.method=="POST":
-        form =OrderForm(request.POST)
-        if form.is_valid():
-            form.save()
+        formset =OrderFormSet(request.POST,instance=customer)
+        if formset.is_valid():
+            formset.save()
             return redirect('/')
         
     context={
-        'form':form,
+        'formset':formset,
     }
     return render(request, 'accounts/order_form.html',context)
 
