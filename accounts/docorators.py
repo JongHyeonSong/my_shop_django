@@ -18,8 +18,7 @@ def allowed_users(allowed_roles=[]):
             
             if request.user.groups.exists(): #속한그룹이있다면
                 group = request.user.groups.all()[0].name
-                print('yes')
-            print(group)
+           
             if group in allowed_roles:
                 return view_func(request, *args, **kwargs)
             else:
