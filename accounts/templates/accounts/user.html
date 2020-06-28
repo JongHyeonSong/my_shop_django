@@ -2,7 +2,7 @@
 {% block content %}
 {% include 'accounts/status.html' %}
 <br>
-
+<a href="{% url 'create_order' user_id %}">주문하기</a>
 <div class="row">
     <div class="col-md">
         <div class="card card-body">
@@ -12,7 +12,6 @@
                     <th>Note</th>
                     <th>Date Ordered</th>
                     <th>Status</th>
-               
                 </tr>
                 {% for order in orders %}
                 <tr>

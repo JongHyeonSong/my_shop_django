@@ -24,13 +24,6 @@ def registerPage(request):
             user = form.save()
             username = form.cleaned_data.get('username')
             
-            # group = Group.objects.get(name='customer')
-            # user.groups.add(group)
-            # Customer.objects.create(
-            #     user=user, name=username
-            # )
-            
-            
             messages.success(request, 'Account was created for ' + username)
             return redirect('login')
             
@@ -92,11 +85,15 @@ def userPage(request):
     delivered = orders.filter(status="Delivered").count()
     pending = orders.filter(status="Pending").count()
     
+    user_id = request.user.customer.id
+    print(user_id)    
+    
     context = {
         'orders':orders,
         'total_orders':total_orders,
         'delivered':delivered,
         'pending':pending,
+        'user_id':user_id,
     }
     return render(request, 'accounts/user.html',context)
 
@@ -148,7 +145,7 @@ def customer(request,pk):
     return render(request, 'accounts/customer.html', context)
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['admin','staff'])
+# @allowed_users(allowed_roles=['admin','staff'])
 def createOrder(request,pk):
     OrderFormSet = inlineformset_factory(Customer,Order, fields=['product','status'],extra=5)
     

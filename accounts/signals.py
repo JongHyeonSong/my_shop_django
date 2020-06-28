@@ -21,12 +21,3 @@ def customer_profile(sender, instance, created, **kwargs):
 
 post_save.connect(customer_profile, sender=User)
 
-
-# from django.dispatch import reciever
-# @reciever(post_save, sender=User)        
-# def update_profile(sender, instance, created, **kwargs):
-    
-#     if created==False:
-#         instance.profile.save() #1:1관계이기때문에 profile로 바로넘어올수있음
-#         print("Profile updated")
-# post_save.connect(update_profile, sender=User) 
